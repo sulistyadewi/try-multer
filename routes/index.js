@@ -23,7 +23,9 @@ let upload = multer({
 router.get("/", controller.findAll);
 router.get("/add", controller.formAdd);
 router.post("/add", upload, controller.saveData);
+router.get("/:id/delete", controller.deleteData);
 router.get("/:id/edit", controller.formEdit);
+router.post("/:id/edit", controller.saveEdit);
 // router.get("/", (req, res) => {
 //   res.send("Hello World");
 // });

@@ -29,11 +29,38 @@ class Controller {
         res.send(err);
       });
   }
+  static deleteData(req, res) {
+    const id = req.params.id;
+    Student.destroy({ where: { id } })
+      .then((data) => {
+        res.redirect("/");
+      })
+      .catch((err) => {
+        res.send(err);
+      });
+  }
+
   static formEdit(req, res) {
     const id = +req.params.id;
     Student.findByPk(id)
       .then((employees) => {
         res.render("updateForm", { employees });
+      })
+      .catch((err) => {
+        res.send(err);
+      });
+  }
+  static saveEdit(req, res) {
+    const id = +req.params.id;
+    const student = {
+      // old_image: req.body.old_image,
+      image: req.file ? req.file.filename : null,
+      name: req.body.name,
+      email: req.body.email,
+    };
+    Student.update(student, { where: { id } })
+      .then((data) => {
+        res.redirect("/");
       })
       .catch((err) => {
         res.send(err);
